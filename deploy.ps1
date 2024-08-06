@@ -1,6 +1,6 @@
 param (
-    [string]$folder1,
-    [string]$folder2,
+    [string]$updateFolder,
+    [string]$executeFolder,
     [string]$backupFolder,
     [string[]]$commands
 )
@@ -57,9 +57,9 @@ function ExecuteCommands {
 }
 
 # Main script logic
-if (CompareFolders -folder1 $folder1 -folder2 $folder2) {
-    $backupPath = BackupFolder -source $folder2 -destination $backupFolder
-    OverwriteFolder -source $folder1 -destination $folder2
+if (CompareFolders -folder1 $updateFolder -folder2 $executeFolder) {
+    $backupPath = BackupFolder -source $executeFolder -destination $backupFolder
+    OverwriteFolder -source $updateFolder -destination $executeFolder
 
     # Execute commands
     $result = ExecuteCommands -commands $commands
