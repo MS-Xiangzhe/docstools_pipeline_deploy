@@ -3,7 +3,7 @@ param (
     [string]$executeFolder,
     [string]$backupFolder,
     [string]$FilePath,
-    [string]$ArgumentList
+    [string]$ArgumentList = ""
 )
 
 function CompareFolders {
@@ -102,7 +102,12 @@ function ExecuteCommand {
     $success = $false
 
     while ($retryCount -le $maxRetries -and -not $success) {
-        $process = Start-Process -FilePath $FilePath -ArgumentList $ArgumentList -Wait -PassThru -NoNewWindow
+        if ($ArgumentList -eq "") {
+            $process = Start-Process -FilePath $FilePath -Wait -PassThru -NoNewWindow
+        }
+        else {
+            $process = Start-Process -FilePath $FilePath -ArgumentList $ArgumentList -Wait -PassThru -NoNewWindow
+        }
         if ($process.ExitCode -eq 0) {
             $success = $true
         }
@@ -116,8 +121,8 @@ function ExecuteCommand {
 }
 
 # Check if any parameter is null or empty
-if (-not $updateFolder -or -not $executeFolder -or -not $backupFolder -or -not $FilePath -or -not $ArgumentList) {
-    Write-Host "Error: All parameters (updateFolder, executeFolder, backupFolder, FilePath, ArgumentList) must be provided and not empty."
+if (-not $updateFolder -or -not $executeFolder -or -not $backupFolder -or -not $FilePath) {
+    Write-Host "Error: All parameters (updateFolder, executeFolder, backupFolder, FilePath) must be provided and not empty."
     exit 1
 }
 
