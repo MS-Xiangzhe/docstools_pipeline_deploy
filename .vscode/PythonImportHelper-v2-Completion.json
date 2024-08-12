@@ -1,0 +1,46 @@
+[
+    {
+        "label": "subprocess",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "subprocess",
+        "description": "subprocess",
+        "detail": "subprocess",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "shutil",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "shutil",
+        "description": "shutil",
+        "detail": "shutil",
+        "documentation": {}
+    },
+    {
+        "label": "tempfile",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "tempfile",
+        "description": "tempfile",
+        "detail": "tempfile",
+        "documentation": {}
+    },
+    {
+        "label": "test_update_file",
+        "kind": 2,
+        "importPath": "tests.test_deploy",
+        "description": "tests.test_deploy",
+        "peekOfCode": "def test_update_file():\n    # Create a temporary directory\n    # Create a file in the temporary directory\n    file = temp_dir / \"file.txt\"\n    file.write_text(\"Hello, World!\")\n    # Update the file\n    file.write_text(\"Hello, Python!\")\n    # Check the file content\n    assert file.read_text() == \"Hello, Python!\"\n    # Cleanup",
+        "detail": "tests.test_deploy",
+        "documentation": {}
+    }
+]
