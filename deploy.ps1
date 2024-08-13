@@ -20,6 +20,11 @@ function CompareFolders {
     $folder1Hashes = @{}
     $folder2Hashes = @{}
 
+    # if folder1 is empty, return false
+    if ($folder1Files.Count -eq 0) {
+        return $false
+    }
+
     foreach ($file in $folder1Files) {
         $path = $file.FullName
         $relativePath = $path.Substring($folder1AbsolutePath.Length).TrimStart('\')
