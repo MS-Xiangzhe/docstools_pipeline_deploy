@@ -11,6 +11,10 @@ function CompareFolders {
         [string]$folder1,
         [string]$folder2
     )
+    # if folder1 is not exist, return false
+    if (-not (Test-Path $folder1)) {
+        return $false
+    }
 
     $folder1AbsolutePath = (Resolve-Path $folder1).Path
     $folder1Files = Get-ChildItem -Recurse $folder1AbsolutePath
