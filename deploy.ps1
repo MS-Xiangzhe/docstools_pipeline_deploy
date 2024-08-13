@@ -156,6 +156,8 @@ Write-Host "Command execution result: $result"
 if (-not $result -and $IS_UPDATED) {
     Write-Host "Command execution failed after updates. Restoring..."
     RestoreBackup -source $backupPath -destination $executeFolder
+    # Delete backup folder
+    Remove-Item -Path $backupPath -Recurse -Force
 
     # Re-execute command
     $result = ExecuteCommand -FilePath $FilePath -ArgumentList $ArgumentList
