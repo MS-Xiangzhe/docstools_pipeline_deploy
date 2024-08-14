@@ -75,7 +75,7 @@ function CreateBackup {
     $backupPath = Join-Path -Path $destination -ChildPath ((Split-Path -Leaf $source) + "_" + $timestamp )
     # if backup folder does not exist, create it
     if (-not (Test-Path $backupPath)) {
-        New-Item -ItemType Directory -Path $backupPath
+        New-Item -ItemType Directory -Path $backupPath -Force
     }
     $backupFilePath = Join-Path -Path $backupPath -ChildPath "archive.zip"
     Compress-Archive -Path $source -DestinationPath $backupFilePath
