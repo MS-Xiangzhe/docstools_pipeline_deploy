@@ -135,7 +135,7 @@ if (-not $updateFolder -or -not $executeFolder -or -not $backupFolder -or -not $
     exit 1
 }
 
-Write-Host "Command: $commandStr"
+Write-Host "Command: $FilePath $ArgumentList"
 
 $IS_UPDATED = $false
 
