@@ -71,8 +71,18 @@ function CreateBackup {
         [string]$source,
         [string]$destination
     )
+    # Try get file version from first exe file in source directory
+    try {
+        $fileVersion = (Get-Command (Get-ChildItem -Path $source -Filter *.exe | Select-Object -First 1).FullName).FileVersionInfo.FileVersion   
+        Write-Host "Backup file version: $fileVersion"
+        $fileVersion = "_v" + $fileVersion
+    }
+    catch {
+        $fileVersion = ""
+        Write-Host "Failed to get file version. Backup will be created without file version."
+    }
     $timestamp = Get-Date -Format "yyyyMMddHHmmss"
-    $backupPath = Join-Path -Path $destination -ChildPath ((Split-Path -Leaf $source) + "_" + $timestamp )
+    $backupPath = Join-Path -Path $destination -ChildPath ((Split-Path -Leaf $source) + $fileVersion + "_" + $timestamp)
     # if backup folder does not exist, create it
     if (-not (Test-Path $backupPath)) {
         New-Item -ItemType Directory -Path $backupPath -Force
