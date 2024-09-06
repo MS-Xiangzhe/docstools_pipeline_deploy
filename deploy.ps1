@@ -1,5 +1,6 @@
 param (
     [string]$updateFolder,
+    [string]$updateCompleteTagFile = "",
     [string]$executeFolder,
     [string]$backupFolder,
     [string]$FilePath,
@@ -152,14 +153,19 @@ $IS_UPDATED = $false
 # Main script logic
 if (CompareFolders -folder1 $updateFolder -folder2 $executeFolder) {
     Write-Host "Updates detected"
-    Write-Host "Backing up $executeFolder to $backupFolder..."
-    CreateBackup -source $executeFolder -destination $backupFolder
-    $backupPath = $global:BACKUP_PATH
-    Write-Host "Backup created at $backupPath"
-    Write-Host "Updating files from $updateFolder to $executeFolder..."
-    OverwriteFolder -source $updateFolder -destination $executeFolder
-    Write-Host "Files updated"
-    $IS_UPDATED = $true
+    if ($updateCompleteTagFile -eq "" -or (Test-Path $updateCompleteTagFile)) {
+        Write-Host "Backing up $executeFolder to $backupFolder..."
+        CreateBackup -source $executeFolder -destination $backupFolder
+        $backupPath = $global:BACKUP_PATH
+        Write-Host "Backup created at $backupPath"
+        Write-Host "Updating files from $updateFolder to $executeFolder..."
+        OverwriteFolder -source $updateFolder -destination $executeFolder
+        Write-Host "Files updated"
+        $IS_UPDATED = $true
+    }
+    else {
+        Write-Host "Update is not complete. Skipping backup and overwrite."
+    }
 }
 else {
     Write-Host "No updates detected. Skipping backup and overwrite."
